@@ -23,17 +23,21 @@ export const requestsSlice = createSlice({
     requestsFailure(state) {
       state.loading = false;
       state.hasErrors = true;
+    },
+
+    filterDataRequests(state, { payload }) {
+      state.filterListRequest = payload;
     }
   }
 });
 
-export const { requestsLoading, requestsRecived, requestsFailure } = requestsSlice.actions;
+export const { requestsLoading, requestsRecived, requestsFailure, filterDataRequests } = requestsSlice.actions;
 
 export const getRequests = () => async dispatch => {
   dispatch(requestsLoading())
 
   try {
-    const response = await fetch(`${API_URL}/535cffa9-67f4-41da-b105-3830f1293672`);
+    const response = await fetch(`${API_URL}/b774480d-8b2a-4bed-a7d1-348de7a69735`);
     const data = await response.json();
 
     dispatch(requestsRecived(data));
