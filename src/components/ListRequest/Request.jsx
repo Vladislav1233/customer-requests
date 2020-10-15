@@ -14,6 +14,7 @@ const useStyles = createUseStyles({
     position: 'absolute',
     width: 'calc(100% - 20px)',
     transition: 'box-shadow 0.3s',
+    cursor: 'pointer',
     '& p': {
       fontSize: '14px',
       margin: '0'
