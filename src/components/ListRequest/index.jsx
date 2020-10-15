@@ -44,6 +44,8 @@ const useStyles = createUseStyles({
   }
 });
 
+let timerId;
+
 const ListRequest = () => {
   const { loading, hasErrors, listRequest, filterListRequest } = useSelector(requestsSelector);
   const { numRequest, clientName } = useSelector(filterRequestsSelector);
@@ -57,7 +59,6 @@ const ListRequest = () => {
   }, []);
 
   useEffect(() => {
-    let timerId;
     clearTimeout(timerId);
 
     if(numRequest || clientName) {
