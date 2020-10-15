@@ -8,7 +8,6 @@ export const filterRequests = createSlice({
   },
   reducers: {
     handleFilter(state, { payload }) {
-      console.log(payload)
       state[payload.name] = payload.value
     }
   }

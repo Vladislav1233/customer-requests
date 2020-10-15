@@ -13,6 +13,7 @@ const useStyles = createUseStyles({
     boxShadow: '0px 0px 10px -3px rgba(0, 0, 0, 0.1)',
     position: 'absolute',
     width: 'calc(100% - 20px)',
+    transition: 'box-shadow 0.3s',
     '& p': {
       fontSize: '14px',
       margin: '0'
@@ -38,6 +39,8 @@ const useStyles = createUseStyles({
     margin: '0',
     display: 'flex',
     flexWrap: 'wrap',
+    maxHeight: '62px',
+    overflow: 'hidden',
     '& li': {
       listStyle: 'none',
       margin: '0 5px 5px 0'
@@ -79,6 +82,9 @@ const useStyles = createUseStyles({
   },
   showCheck: {
     visibility: 'visible'
+  },
+  active: {
+    boxShadow: '0px 0px 10px -3px rgba(0, 0, 0, 0.5)',
   },
 
   '@media (min-width: 768px)': {
@@ -136,7 +142,7 @@ const Request = ({
   }
   
   return(
-    <div className={cls.request} onClick={toggleHidden} style={{ zIndex: zIndex }}>
+    <div className={`${cls.request} ${isHidden ? '' : cls.active}`} onClick={toggleHidden} style={{ zIndex: zIndex }}>
       <div className={`${cls.checkbox} ${(isCheck || !isHidden) ? cls.showCheck : ''}`}>
         <Checkbox 
           check={isCheck}
