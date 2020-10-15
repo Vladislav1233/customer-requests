@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import Request from 'components/ListRequest/Request';
 import { getRequests, requestsSelector, filterDataRequests } from 'store/requests';
@@ -16,10 +16,13 @@ const useStyles = createUseStyles({
     listStyle: 'none',
     padding: '0 10px',
     width: '100%',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    height: '165px',
+    position: 'relative'
   },
   '@media (min-width: 768px)': {
     item: {
+      height: '175px',
       width: '50%'
     }
   },

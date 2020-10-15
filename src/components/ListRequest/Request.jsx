@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import Tag from 'components/Tag';
 
@@ -10,6 +10,8 @@ const useStyles = createUseStyles({
     overflow: 'hidden',
     padding: '20px',
     boxShadow: '0px 0px 10px -3px rgba(0, 0, 0, 0.1)',
+    position: 'absolute',
+    width: 'calc(100% - 20px)',
     '& p': {
       fontSize: '14px',
       margin: '0'
@@ -21,7 +23,14 @@ const useStyles = createUseStyles({
     margin: '0 0 10px'
   },
   toggleHidden: {
-
+    overflow: 'hidden',
+    margin: '0 -20px',
+    padding: '0 20px',
+    height: '0',
+    transition: 'height 0.3s',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column'
   },
   listTag: {
     padding: '0',
@@ -55,6 +64,13 @@ const useStyles = createUseStyles({
   companyInfo: {
     margin: '10px 0'
   },
+  zInd: {
+    zIndex: '2'
+  },
+  show: {
+    height: '185px'
+  },
+
   '@media (min-width: 768px)': {
     title: {
       fontSize: '16px'
@@ -71,6 +87,9 @@ const useStyles = createUseStyles({
     },
     requirement: {
       fontSize: '16px'
+    },
+    show: {
+      height: '198px'
     }
   }
 });
@@ -85,9 +104,23 @@ const Request = ({
   date
 }) => {
   const cls = useStyles();
+  const [isHidden, setIsHidden] = useState(true);
+  const [zIndex, setZIndex] = useState(0);
+
+  const toggleHidden = () => {
+    let timerId;
+    clearTimeout(timerId);
+    if(isHidden) {
+      setIsHidden(false)
+      setZIndex(1)
+    } else {
+      setIsHidden(true)
+      timerId = setTimeout(() => {setZIndex(0)}, 300)
+    }
+  };
   
   return(
-    <div className={cls.request}>
+    <div className={cls.request} onClick={() => toggleHidden()} style={{ zIndex: zIndex }}>
       <h5 className={cls.title}>{name}</h5>
       <p>{sum} руб.</p> {/* TODO: сделать функцию которая парсит число с отступами */}
       <div className={cls.companyInfo}>
@@ -95,7 +128,7 @@ const Request = ({
         <p className={cls.textLight}>ИНН {taxpayerId}</p>
       </div>
 
-      <div className={cls.toggleHidden}>
+      <div className={`${cls.toggleHidden} ${isHidden ? '' : cls.show}`}>
         <ul className={cls.listTag}>
           <li><Tag text="Исполнение" /></li>
           <li><Tag text="Новая" /></li>
