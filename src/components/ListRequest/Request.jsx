@@ -144,7 +144,7 @@ const Request = ({
         />
       </div>
       <h5 className={cls.title}>{name}</h5>
-      <p>{sum} руб.</p> {/* TODO: сделать функцию которая парсит число с отступами */}
+      <p>{sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} руб.</p>
       <div className={cls.companyInfo}>
         <p>{company}</p>
         <p className={cls.textLight}>ИНН {taxpayerId}</p>
