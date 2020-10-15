@@ -5,12 +5,48 @@ import { getRequests, requestsSelector, filterDataRequests } from 'store/request
 import { filterRequestsSelector } from 'store/filterRequests';
 import { useSelector, useDispatch } from 'react-redux';
 
+const useStyles = createUseStyles({
+  listRequest: {
+    padding: '0',
+    margin: '0 -10px',
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  item: {
+    listStyle: 'none',
+    padding: '0 10px',
+    width: '100%',
+    marginBottom: '20px'
+  },
+  '@media (min-width: 768px)': {
+    item: {
+      width: '50%'
+    }
+  },
+  '@media (min-width: 1024px)': {
+    item: {
+      width: 'calc(100% / 3)'
+    }
+  },
+  '@media (min-width: 1280px)': {
+    item: {
+      width: '25%'
+    }
+  },
+  '@media (min-width: 1600px)': {
+    item: {
+      width: '20%'
+    }
+  }
+});
+
 const ListRequest = () => {
   const { loading, hasErrors, listRequest, filterListRequest } = useSelector(requestsSelector);
   const { numRequest, clientName } = useSelector(filterRequestsSelector);
   const dispatch = useDispatch();
   const reNumRequest = new RegExp(`(${numRequest})`, 'i');
   const reClientName = new RegExp(`${clientName}`, 'gi');
+  const cls = useStyles();
 
   useEffect(() => {
     dispatch(getRequests())
@@ -18,26 +54,27 @@ const ListRequest = () => {
 
   useEffect(() => {
     let timerId;
+    clearTimeout(timerId);
+
     if(numRequest || clientName) {
-      clearTimeout(timerId);
+      
       timerId = setTimeout(() => {
         const updateData = listRequest.filter(item => (
-          reNumRequest.test(item.id) && reClientName.test(item.name)
+          item.id.search(reNumRequest) !== -1 && item.name.search(reClientName) !== -1
         ));
     
         dispatch(filterDataRequests(updateData))
       }, 500);
     } else {
-      clearTimeout(timerId);
       dispatch(filterDataRequests(listRequest))
     }
     
   }, [numRequest, clientName])
 
-  return <ul>
+  return <ul className={cls.listRequest}>
     {filterListRequest.map(item => {
       console.log(item.id, item.id.search(reNumRequest))
-      return <li key={item.id}><Request /></li>
+      return <li className={cls.item} key={item.id}><Request /></li>
     })}
   </ul>
 }

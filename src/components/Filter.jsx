@@ -1,9 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Input from 'components/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterRequestsSelector, handleFilter } from 'store/filterRequests';
+import { createUseStyles } from 'react-jss';
+
+const useStyles = createUseStyles({
+  filter: {
+    marginBottom: '20px'
+  },
+  item: {
+    marginBottom: '15px'
+  },
+  '@media (min-width: 768px)': {
+    filter: {
+      display: 'flex'
+    },
+    item: {
+      marginRight: '20px',
+      marginBottom: '0'
+    }
+  }
+});
 
 const Filter = () => {
+  const cls = useStyles();
   const { numRequest, clientName } = useSelector(filterRequestsSelector);
   const dispatch = useDispatch();
 
@@ -15,10 +35,8 @@ const Filter = () => {
     }))
   };
 
-  console.log(numRequest, clientName)
-
-  return <form>
-    <div>
+  return <form className={cls.filter}>
+    <div className={cls.item}>
       <Input 
         name="numRequest"
         placeholder="Номер заявки"
@@ -26,7 +44,7 @@ const Filter = () => {
         value={numRequest}
       />
     </div>
-    <div>
+    <div className={cls.item}>
       <Input 
         name="clientName"
         placeholder="Наименование клиента"
