@@ -73,8 +73,15 @@ const ListRequest = () => {
 
   return <ul className={cls.listRequest}>
     {filterListRequest.map(item => {
-      console.log(item.id, item.id.search(reNumRequest))
-      return <li className={cls.item} key={item.id}><Request /></li>
+      return <li className={cls.item} key={item.id}><Request 
+        name={item.name}
+        sum={item.sum}
+        company={item.company}
+        taxpayerId={item.taxpayer_id}
+        requirement={item.requirement}
+        id={item.id}
+        date={item.date}
+      /></li>
     })}
   </ul>
 }

@@ -75,16 +75,24 @@ const useStyles = createUseStyles({
   }
 });
 
-const Request = () => {
+const Request = ({
+  name,
+  sum,
+  company,
+  taxpayerId,
+  requirement,
+  id,
+  date
+}) => {
   const cls = useStyles();
   
   return(
     <div className={cls.request}>
-      <h5 className={cls.title}>Проверить данные клиента</h5>
-      <p>2 000 000 руб.</p> {/* TODO: сделать функцию которая парсит число с отступами */}
+      <h5 className={cls.title}>{name}</h5>
+      <p>{sum} руб.</p> {/* TODO: сделать функцию которая парсит число с отступами */}
       <div className={cls.companyInfo}>
-        <p>ООО "ТехИнвест"</p>
-        <p className={cls.textLight}>ИНН 2901142357</p>
+        <p>{company}</p>
+        <p className={cls.textLight}>ИНН {taxpayerId}</p>
       </div>
 
       <div className={cls.toggleHidden}>
@@ -93,15 +101,15 @@ const Request = () => {
           <li><Tag text="Новая" /></li>
           <li><Tag text="На экспертизе" /></li>
         </ul>
-        <div className={cls.requirement}>Иванов И.И.</div>
+        <div className={cls.requirement}>{requirement}</div>
         <ul className={cls.listTag}>
           <li><Tag text="Какой-то тег" /></li>
         </ul>
       </div>
 
       <div className={cls.footer}>
-        <p className={cls.textLight}>234567</p>
-        <p className={cls.textLight}>от 01.08.2018</p>
+        <p className={cls.textLight}>{id}</p>
+        <p className={cls.textLight}>от {date}</p>
       </div>
     </div>
   )
