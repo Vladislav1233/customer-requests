@@ -101,7 +101,8 @@ const Request = ({
   taxpayerId,
   requirement,
   id,
-  date
+  date,
+  tags = []
 }) => {
   const cls = useStyles();
   const [isHidden, setIsHidden] = useState(true);
@@ -130,13 +131,14 @@ const Request = ({
 
       <div className={`${cls.toggleHidden} ${isHidden ? '' : cls.show}`}>
         <ul className={cls.listTag}>
-          <li><Tag text="Исполнение" /></li>
-          <li><Tag text="Новая" /></li>
-          <li><Tag text="На экспертизе" /></li>
+          {tags.map((item, index, arr) => index !== arr.length -1 
+            ? <li key={item}><Tag text={item} /></li>
+            : null
+          )}
         </ul>
         <div className={cls.requirement}>{requirement}</div>
         <ul className={cls.listTag}>
-          <li><Tag text="Какой-то тег" /></li>
+          <li key={tags[tags.length - 1]}><Tag text={tags[tags.length - 1]} /></li>
         </ul>
       </div>
 

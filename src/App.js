@@ -20,11 +20,11 @@ const useStyles = createUseStyles({
   },
   app: {
     overflow: 'hidden',
-    padding: '40px 15px'
+    padding: '40px 15px 180px'
   },
   '@media (min-width: 768px)': {
     app: {
-      padding: '40px'
+      padding: '40px 40px 180px'
     }
   }
 });

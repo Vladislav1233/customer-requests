@@ -37,7 +37,7 @@ export const getRequests = () => async dispatch => {
   dispatch(requestsLoading())
 
   try {
-    const response = await fetch(`${API_URL}/b774480d-8b2a-4bed-a7d1-348de7a69735`);
+    const response = await fetch(`${API_URL}/1460f68c-9ffe-40f1-af55-c5c265fdb019`);
     const data = await response.json();
 
     dispatch(requestsRecived(data));

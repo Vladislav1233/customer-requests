@@ -10,7 +10,8 @@ const useStyles = createUseStyles({
     padding: '0',
     margin: '0 -10px',
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    minHeight: '380px',
   },
   item: {
     listStyle: 'none',
@@ -84,6 +85,7 @@ const ListRequest = () => {
         requirement={item.requirement}
         id={item.id}
         date={item.date}
+        tags={item.tags}
       /></li>
     })}
   </ul>
