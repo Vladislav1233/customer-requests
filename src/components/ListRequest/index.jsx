@@ -65,7 +65,7 @@ const ListRequest = () => {
       
       timerId = setTimeout(() => {
         const updateData = listRequest.filter(item => (
-          item.id.search(reNumRequest) !== -1 && item.name.search(reClientName) !== -1
+          item.id.search(reNumRequest) !== -1 && item.requirement.search(reClientName) !== -1
         ));
     
         dispatch(filterDataRequests(updateData))
