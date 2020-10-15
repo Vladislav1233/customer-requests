@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import Tag from 'components/Tag';
+import Checkbox from 'components/Checkbox';
 
 
 const useStyles = createUseStyles({
@@ -70,6 +71,15 @@ const useStyles = createUseStyles({
   show: {
     height: '185px'
   },
+  checkbox: {
+    position: 'absolute',
+    right: '20px',
+    top: '20px',
+    visibility: 'hidden'
+  },
+  showCheck: {
+    visibility: 'visible'
+  },
 
   '@media (min-width: 768px)': {
     title: {
@@ -107,6 +117,7 @@ const Request = ({
   const cls = useStyles();
   const [isHidden, setIsHidden] = useState(true);
   const [zIndex, setZIndex] = useState(0);
+  const [ isCheck, setCheck ] = useState(false);
 
   const toggleHidden = () => {
     let timerId;
@@ -119,9 +130,19 @@ const Request = ({
       timerId = setTimeout(() => {setZIndex(0)}, 300)
     }
   };
+
+  const handleCheck = (e) => {
+    setCheck(e.target.checked);
+  }
   
   return(
-    <div className={cls.request} onClick={() => toggleHidden()} style={{ zIndex: zIndex }}>
+    <div className={cls.request} onClick={toggleHidden} style={{ zIndex: zIndex }}>
+      <div className={`${cls.checkbox} ${(isCheck || !isHidden) ? cls.showCheck : ''}`}>
+        <Checkbox 
+          check={isCheck}
+          onChange={handleCheck}
+        />
+      </div>
       <h5 className={cls.title}>{name}</h5>
       <p>{sum} руб.</p> {/* TODO: сделать функцию которая парсит число с отступами */}
       <div className={cls.companyInfo}>
