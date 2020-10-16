@@ -25,13 +25,13 @@
 4.  В поле "Поиск по наименованию" вводится фамилия клиента (Иванов, стрельцов, и т.д. то что в остальных карточках).
 5. Реализация функции поиска. На самом деле есть минимум два решения по поиску. Я в данном случае остановился на первом (который и реализован в коде). Второй вариант тоже приемлем, будет зависеть от конечных требований по работе от ux или аналитиков. Второй более гибкий и я бы уточнял с аналитиками какие данные будут на бою и как в конечном итоге будет использоваться строка поиска.
 
-- ```javascript
+```javascript
 const updateData = listRequest.filter(item => (
     item.id.search(reNumRequest) !== -1 && item.requirement.search(reClientName) !== -1
 ));
 ```
 
-- ```javascript
+```javascript
 const updateData = listRequest.filter(item => {
 	return item.id.toLowerCase().replace(/ /g,"").includes(numRequest.toLowerCase().replace(/ /g,"")) 
 	&& item.requirement.toLowerCase().replace(/ /g,"").includes(clientName.toLowerCase().replace(/ /g,""))
