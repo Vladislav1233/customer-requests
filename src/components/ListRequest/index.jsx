@@ -21,6 +21,14 @@ const useStyles = createUseStyles({
     height: '165px',
     position: 'relative'
   },
+  loading: {
+    display: 'flex',
+    height: '100px',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: '500',
+    fontSize: '18px'
+  },
   '@media (min-width: 768px)': {
     item: {
       height: '175px',
@@ -47,15 +55,16 @@ const useStyles = createUseStyles({
 let timerId;
 
 const ListRequest = () => {
-  const { loading, hasErrors, listRequest, filterListRequest } = useSelector(requestsSelector);
+  const { loading, listRequest, filterListRequest } = useSelector(requestsSelector);
   const { numRequest, clientName } = useSelector(filterRequestsSelector);
   const dispatch = useDispatch();
-  const reNumRequest = new RegExp(`(${numRequest})`, 'i');
-  const reClientName = new RegExp(`${clientName}`, 'gi');
+  const reNumRequest = new RegExp(`(${numRequest.trim()})`, 'i');
+  const reClientName = new RegExp(`${clientName.trim()}`, 'gi');
   const cls = useStyles();
 
   useEffect(() => {
     dispatch(getRequests())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -67,29 +76,38 @@ const ListRequest = () => {
         const updateData = listRequest.filter(item => (
           item.id.search(reNumRequest) !== -1 && item.requirement.search(reClientName) !== -1
         ));
+        
+        // Note: На самом деле есть минимум два решения по поиску. Второй вариант тоже приемлем как и тот который выше. Второй более гибкий и я бы уточнял с аналитиками какие 
+        // данные будут на бою и как в конечном итоге будет использоваться строка поиска.
+        // const updateData = listRequest.filter(item => {
+        //   return item.id.toLowerCase().replace(/ /g,"").includes(numRequest.toLowerCase().replace(/ /g,"")) 
+        //     && item.requirement.toLowerCase().replace(/ /g,"").includes(clientName.toLowerCase().replace(/ /g,""))
+        // });
     
         dispatch(filterDataRequests(updateData))
       }, 500);
     } else {
       dispatch(filterDataRequests(listRequest))
     }
-    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numRequest, clientName])
 
-  return <ul className={cls.listRequest}>
-    {filterListRequest.map(item => {
-      return <li className={cls.item} key={item.id}><Request 
-        name={item.name}
-        sum={item.sum}
-        company={item.company}
-        taxpayerId={item.taxpayer_id}
-        requirement={item.requirement}
-        id={item.id}
-        date={item.date}
-        tags={item.tags}
-      /></li>
-    })}
-  </ul>
+  return !loading ? 
+    <ul className={cls.listRequest}>
+      {filterListRequest.map(item => {
+        return <li className={cls.item} key={item.id}><Request 
+          name={item.name}
+          sum={item.sum}
+          company={item.company}
+          taxpayerId={item.taxpayer_id}
+          requirement={item.requirement}
+          id={item.id}
+          date={item.date}
+          tags={item.tags}
+        /></li>
+      })}
+    </ul>
+    : <div className={cls.loading}>Загрузка...</div>
 }
 
 export default ListRequest;
